@@ -28,6 +28,9 @@ function saveTask(e){
     }
 
 
+    getTasks();
+
+    document.getElementById('formTasks').requestFullscreen();//para que cuando guardemos una task se resetee el formulario de tasks
 
     e.preventDefault();//evita que se refresque la pagina cuando le das a confirm
 
@@ -43,13 +46,30 @@ function getTasks(){//vamos a hcer una consulta a localsotarge y una vez tenga e
     for(let i=0; i<tasks.length; i++){//de esta manera quedan registros de nuestra tarea mostradas en la consola
         
         let title=tasks[i].title;//esta variable va a almacenar el valor de las tareas en el indice i
-        let description=tasks[i].title;//same
+        let description=tasks[i].description;//same
 
-        tasksView.innerHTML= ////es d le vamos a insertar dentro de su div (que se encuentra en html)
+        //es d le vamos a insertar dentro de su div (que se encuentra en html)
+        tasksView.innerHTML += //+= para que cada tarea cada vez que se recorra se mepiece a agregar dentro tasksView
         `<div class="card">
             <div class="card-body">
             <p>${title} - ${description}</p>
+            <a class="btn btn-danger" onclick="deleteTask('${title}')" >
+            DELETE</a>
             </div>
         </div>`
     }
 }
+
+function deleteTask(title){// a partir de un titulo puede eliminarlo
+    let tasks=JSON.parse(localStorage.getItem('tasks'));
+
+    for(let i =0; i<tasks.length; i++){//recorremos los datos del localstorage
+        if(tasks[i].title == title){//si alguno de los titulos que estan en las notas coincide con el titulo que se encuentra en local storage
+            tasks.splice(i,1);//este metodo nos ayuda a quitar un dato pero tenemos que decirle en que indice
+        }
+    }
+    localStorage.setItem('tasks', JSON.stringify(tasks))//para guardar los cambios cuando eliminamos una task
+    getTasks();
+}
+
+getTasks();
