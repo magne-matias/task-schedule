@@ -26,10 +26,13 @@ function saveTask(e){
         tasks.push()//para a llenarlo con el metodo push
         
         //almacenarlo en el localstorage
-        localStorage.setItem('tasks',JSON.stringify(task));
+        localStorage.setItem('tasks',JSON.stringify(tasks));
         
     }else{//si ya existe valores vamos a empezar a actualizarlos
-
+        let tasks = JSON.parse(localStorage.getItem('tasks'));//aca obtenemos las tareas que tenemos almacenadas en el localstorage y almacenarla en una variable
+        tasks.push(task);//las actualizamos con el metodo push, 
+        localStorage.setItem('tasks',JSON.stringify(tasks));//y al mismo tiempo lo almacenamos 
+        //para convertir un objeto a un string podemos utilizar JSON.stringify, este metodo nos permite convertir un objeto en un string
     }
 
 
