@@ -13,17 +13,9 @@ function saveTask(e){
         description // description:description
     };
 
-    /*localStorage.setItem('tasks',JSON.stringify(task));//nos permite poder almacenar un dato pero necesitamos darle dos parametros, todo queda almacenado en localstorage
-    //(nombre, valor del dato ) */
-
-    localStorage.setItem('tasks',JSON.stringify(task));//para convertir un objeto a un string podemos utilizar JSON.stringify, este metodo nos permite convertir un objeto en un string
-    //es mejor tenerlos almacenados en formato string
-    localStorage.getItem('tasks')//para obtener los datos de arriba, solamente necesitamos pedir el dato
-
-
     if(localStorage.getItem('tasks')===null){//si desde el localstorage ya existe un valor llamado tareas y es igual a nulo vamos a crear tareas
-        let task=[];
-        tasks.push()//para a llenarlo con el metodo push
+        let tasks=[];
+        tasks.push(task)//para a llenarlo con el metodo push
         
         //almacenarlo en el localstorage
         localStorage.setItem('tasks',JSON.stringify(tasks));
@@ -40,4 +32,24 @@ function saveTask(e){
     e.preventDefault();//evita que se refresque la pagina cuando le das a confirm
 
     //todos nuestros datos van a quedar guardados en localStorage
+}
+
+function getTasks(){//vamos a hcer una consulta a localsotarge y una vez tenga el dato vamos a mostarlo por pantalla
+    let tasks=JSON.parse(localStorage.getItem('tasks'));//quiero obtenrlas tareas en formato JSON y almacenarlo en una variable 
+    let tasksView=document.getElementById('tasks');//obtenemos tasks
+
+    tasksView.innerHTML='';//vamos a dejarlo limpio por si ya existen datos
+
+    for(let i=0; i<tasks.length; i++){//de esta manera quedan registros de nuestra tarea mostradas en la consola
+        
+        let title=tasks[i].title;//esta variable va a almacenar el valor de las tareas en el indice i
+        let description=tasks[i].title;//same
+
+        tasksView.innerHTML= ////es d le vamos a insertar dentro de su div (que se encuentra en html)
+        `<div class="card">
+            <div class="card-body">
+            <p>${title} - ${description}</p>
+            </div>
+        </div>`
+    }
 }
